@@ -1,0 +1,39 @@
+<div style="display: flex; flex-direction: row;">
+  <div>
+    <div class="name-card" *ngFor="let book of books" (click)="onSelect(book)">
+      <h3 class="character-text">{{ book.name }}</h3>
+      <h4>({{ book.authors }})</h4>
+    </div>
+  </div>
+  <div class="details-card" *ngIf="selectedBook">
+    <a href="{{ selectedBook.url }}"
+      ><h2>{{ selectedBook.name | uppercase }}</h2></a
+    >
+    <h3>({{ selectedBook.authors }})</h3>
+    <p>{{ selectedBook.isbn }}</p>
+    <h4></h4>
+    <h4>{{ selectedBook.numberOfPages }} pages</h4>
+    <h4>Publisher:</h4>
+    <p>{{ selectedBook.publisher }}</p>
+    <h4>Country:</h4>
+    <p>{{ selectedBook.country }}</p>
+    <h4>mediaType:</h4>
+    <p>{{ selectedBook.mediaType }}</p>
+    <h4>Released:</h4>
+    <p>{{ selectedBook.released }}</p>
+    <h4>Characters:</h4>
+    <p>{{ selectedBook.characters }}</p>
+    <h4>povCharacter:</h4>
+    <p>{{ selectedBook.povCharacter }}</p>
+  </div>
+</div>
+<ngb-pagination
+  [collectionSize]="12"
+  [pageSize]="12"
+  [rotate]="true"
+  [boundaryLinks]="true"
+  [(page)]="page"
+  aria-label="Default pagination"
+  (pageChange)="loadPage($event)"
+>
+</ngb-pagination>

@@ -1,4 +1,22 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<app-character></app-character>
-
+<div>
+  <h1>__Game of Thrones library</h1>
+</div>
+<ngb-tabset>
+  <ngb-tab title="Characters">
+    <ng-template ngbTabContent>
+      <app-character style="padding: 40px"></app-character>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Books">
+    <ng-template ngbTabContent>
+      <app-books style="padding: 40px"></app-books>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Houses">
+    <ng-template ngbTabContent>
+      <app-house style="padding: 40px"></app-house>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
 <router-outlet></router-outlet>

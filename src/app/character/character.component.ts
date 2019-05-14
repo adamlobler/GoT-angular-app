@@ -1,20 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { character } from '../character.model';
-import { DataService } from '../data.service';
+import { Component, OnInit } from "@angular/core";
+import { character } from "./character.model";
+import { DataService } from "../data.service";
 
 @Component({
-  selector: 'app-character',
-  templateUrl: './character.component.html',
-  styleUrls: ['./character.component.css']
+  selector: "app-character",
+  templateUrl: "./character.component.html",
+  styleUrls: ["./character.component.css"]
 })
 export class CharacterComponent implements OnInit {
-
   characters: character[];
-constructor( private dataServie: DataService) {
+  itemsPerPage: number;
+  totalItems: any;
+  page: 3;
+  previousPage: any;
+  selectedCharacter: character;
 
-}
-ngOnInit() {
-  return this.dataServie.getCharacters()
-    .subscribe(data => this.characters = data);
-}
+  constructor(private CharacterService: DataService) {}
+
+  ngOnInit() {
+    return this.CharacterService.getCharacters(this.page).subscribe(
+      data => (this.characters = data)
+    );
+  }
+
+  onSelect(character: character): void {
+    this.selectedCharacter = character;
+  }
+
+  loadPage(page: number) {
+    if (page !== this.previousPage) {
+      this.previousPage = page;
+      this.CharacterService.getCharacters(this.page).subscribe(
+        data => (this.characters = data)
+      );
+    }
+  }
 }

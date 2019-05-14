@@ -1,0 +1,52 @@
+<div style="display: flex; flex-direction: row;">
+  <div>
+    <div
+      class="name-card"
+      *ngFor="let house of Houses"
+      (click)="onSelect(house)"
+    >
+      <h3 class="character-text">{{ house.name }}</h3>
+    </div>
+  </div>
+  <div class="details-card" *ngIf="selectedHouse">
+    <a href="{{ selectedHouse.url }}"
+      ><h2>{{ selectedHouse.name | uppercase }}</h2></a
+    >
+    <h3>({{ selectedHouse.region }})</h3>
+    <p>{{ selectedHouse.words }}</p>
+    <h4>Coat of arms:</h4>
+    <p>{{ selectedHouse.coatOfArms }}</p>
+    <h4>titles:</h4>
+    <p>{{ selectedHouse.titles }}</p>
+    <h4>Seats:</h4>
+    <p>{{ selectedHouse.seats }}</p>
+    <h4>currentLord:</h4>
+    <p>{{ selectedHouse.currentLord }}</p>
+    <h4>heir:</h4>
+    <p>{{ selectedHouse.heir }}</p>
+    <h4>overLord:</h4>
+    <p>{{ selectedHouse.overLord }}</p>
+    <h4>founded:</h4>
+    <p>{{ selectedHouse.founded }}</p>
+    <h4>founder:</h4>
+    <p>{{ selectedHouse.founder }}</p>
+    <h4>diedout:</h4>
+    <p>{{ selectedHouse.diedOut }}</p>
+    <h4>ancestralWeapons:</h4>
+    <p>{{ selectedHouse.ancestralWeapons }}</p>
+    <h4>cadetBranches:</h4>
+    <p>{{ selectedHouse.cadetBranches }}</p>
+    <h4>swornMembers:</h4>
+    <p>{{ selectedHouse.swornMembers }}</p>
+  </div>
+</div>
+<ngb-pagination
+  [collectionSize]="30"
+  [pageSize]="10"
+  [rotate]="true"
+  [boundaryLinks]="true"
+  [(page)]="page"
+  aria-label="Default pagination"
+  (pageChange)="loadPage($event)"
+>
+</ngb-pagination>

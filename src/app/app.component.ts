@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { character } from './character.model';
-import { DataService } from './data.service';
+import { Component, OnInit } from "@angular/core";
+import { character } from "./character/character.model";
+import { DataService } from "./data.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit {
   characters: character[];
-constructor( private dataServie: DataService) {
-
-}
-ngOnInit() {
-  return this.dataServie.getCharacters()
-    .subscribe(data => this.characters = data);
-}
+  constructor(private CharacterService: DataService) {}
+  ngOnInit() {
+    return this.CharacterService.getCharacters(0).subscribe(
+      data => (this.characters = data)
+    );
+  }
 }

@@ -1,6 +1,51 @@
-<div *ngFor='let character of characters'>
-    <h2>{{character.name}}</h2>
-    <h3>
-        playedBy: {{character.playedBy}};	
-    </h3>
+<div style="display: flex; flex-direction: row;">
+  <div>
+    <div
+      class="name-card"
+      *ngFor="let character of characters"
+      (click)="onSelect(character)"
+    >
+      <h3 class="character-text">{{ character.name }}</h3>
+      <h4>({{ character.playedBy }})</h4>
+    </div>
   </div>
+  <div class="details-card" *ngIf="selectedCharacter">
+    <a href="{{ selectedCharacter.url }}"
+      ><h2>{{ selectedCharacter.name | uppercase }}</h2></a
+    >
+    <h3>({{ selectedCharacter.playedBy }})</h3>
+    <p>{{ selectedCharacter.titles }}</p>
+    <h4>Gender:</h4>
+    <p>{{ selectedCharacter.gender }}</p>
+    <h4>Culture:</h4>
+    <p>{{ selectedCharacter.culture }}</p>
+    <h4>Born:</h4>
+    <p>{{ selectedCharacter.born }}</p>
+    <h4>Died:</h4>
+    <p>{{ selectedCharacter.died }}</p>
+    <h4>Alises:</h4>
+    <p>{{ selectedCharacter.alises }}</p>
+    <h4>Father:</h4>
+    <p>{{ selectedCharacter.father }}</p>
+    <h4>Mother:</h4>
+    <p>{{ selectedCharacter.mother }}</p>
+    <h4>Spouse:</h4>
+    <p>{{ selectedCharacter.spouse }}</p>
+    <h4>Allegiances:</h4>
+    <p>{{ selectedCharacter.allegiances }}</p>
+    <h4>Books:</h4>
+    <p>{{ selectedCharacter.books }}</p>
+    <h4>PovBooks:</h4>
+    <p>{{ selectedCharacter.povBooks }}</p>
+  </div>
+</div>
+<ngb-pagination
+  [collectionSize]="2138"
+  [pageSize]="20"
+  [rotate]="true"
+  [boundaryLinks]="true"
+  [(page)]="page"
+  aria-label="Default pagination"
+  (pageChange)="loadPage($event)"
+>
+</ngb-pagination>
