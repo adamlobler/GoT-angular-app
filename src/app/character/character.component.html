@@ -3,16 +3,14 @@
     <div
       class="name-card"
       *ngFor="let character of characters"
-      (click)="onSelect(character)"
-    >
+      (click)="onSelect(character)">
       <h3 class="character-text">{{ character.name }}</h3>
       <h4>({{ character.playedBy }})</h4>
     </div>
   </div>
   <div class="details-card" *ngIf="selectedCharacter">
-    <a href="{{ selectedCharacter.url }}"
-      ><h2>{{ selectedCharacter.name | uppercase }}</h2></a
-    >
+    <a href="{{ selectedCharacter.url }}"><h2>{{ selectedCharacter.name |
+        uppercase }}</h2></a>
     <h3>({{ selectedCharacter.playedBy }})</h3>
     <p>{{ selectedCharacter.titles }}</p>
     <h4>Gender:</h4>
@@ -30,13 +28,40 @@
     <h4>Mother:</h4>
     <p>{{ selectedCharacter.mother }}</p>
     <h4>Spouse:</h4>
-    <p>{{ selectedCharacter.spouse }}</p>
+    <p (click)="onSpouseSelect()">{{ selectedSpouse.name }}</p>
     <h4>Allegiances:</h4>
     <p>{{ selectedCharacter.allegiances }}</p>
     <h4>Books:</h4>
     <p>{{ selectedCharacter.books }}</p>
     <h4>PovBooks:</h4>
     <p>{{ selectedCharacter.povBooks }}</p>
+  </div>
+  <div class="details-card" *ngIf="spouseSelected">
+    <a href="{{ selectedSpouse.url }}"><h2>{{ selectedSpouse.name | uppercase }}</h2></a>
+    <h3>({{ selectedSpouse.playedBy }})</h3>
+    <p>{{ selectedSpouse.titles }}</p>
+    <h4>Gender:</h4>
+    <p>{{ selectedSpouse.gender }}</p>
+    <h4>Culture:</h4>
+    <p>{{ selectedSpouse.culture }}</p>
+    <h4>Born:</h4>
+    <p>{{ selectedSpouse.born }}</p>
+    <h4>Died:</h4>
+    <p>{{ selectedSpouse.died }}</p>
+    <h4>Alises:</h4>
+    <p>{{ selectedSpouse.alises }}</p>
+    <h4>Father:</h4>
+    <p>{{ selectedSpouse.father }}</p>
+    <h4>Mother:</h4>
+    <p>{{ selectedSpouse.mother }}</p>
+    <h4>Spouse:</h4>
+    <p>{{ selectedSpouse.spouse }}</p>
+    <h4>Allegiances:</h4>
+    <p>{{ selectedSpouse.allegiances }}</p>
+    <h4>Books:</h4>
+    <p>{{ selectedSpouse.books }}</p>
+    <h4>PovBooks:</h4>
+    <p>{{ selectedSpouse.povBooks }}</p>
   </div>
 </div>
 <ngb-pagination
@@ -46,6 +71,5 @@
   [boundaryLinks]="true"
   [(page)]="page"
   aria-label="Default pagination"
-  (pageChange)="loadPage($event)"
->
+  (pageChange)="loadPage($event)">
 </ngb-pagination>
