@@ -3,14 +3,16 @@
     <div
       class="name-card"
       *ngFor="let character of characters"
-      (click)="onSelect(character)">
+      (click)="onSelect(character)"
+    >
       <h3 class="character-text">{{ character.name }}</h3>
       <h4>({{ character.playedBy }})</h4>
     </div>
   </div>
   <div class="details-card" *ngIf="selectedCharacter">
-    <a href="{{ selectedCharacter.url }}"><h2>{{ selectedCharacter.name |
-        uppercase }}</h2></a>
+    <a href="{{ selectedCharacter.url }}"
+      ><h2>{{ selectedCharacter.name | uppercase }}</h2></a
+    >
     <h3>({{ selectedCharacter.playedBy }})</h3>
     <p>{{ selectedCharacter.titles }}</p>
     <h4>Gender:</h4>
@@ -30,14 +32,22 @@
     <h4>Spouse:</h4>
     <p (click)="onSpouseSelect()">{{ selectedSpouse.name }}</p>
     <h4>Allegiances:</h4>
-    <p>{{ selectedCharacter.allegiances }}</p>
+    <div *ngFor="let house of selectedAllegiances">
+      <p>{{ house.name }}</p>
+    </div>
     <h4>Books:</h4>
-    <p>{{ selectedCharacter.books }}</p>
+    <div *ngFor="let book of selectedBooks">
+      <p>{{ book.name }}</p>
+    </div>
     <h4>PovBooks:</h4>
-    <p>{{ selectedCharacter.povBooks }}</p>
+    <div *ngFor="let povBook of selectedPovBooks">
+      <p>{{ povBook.name }}</p>
+    </div>
   </div>
   <div class="details-card" *ngIf="spouseSelected">
-    <a href="{{ selectedSpouse.url }}"><h2>{{ selectedSpouse.name | uppercase }}</h2></a>
+    <a href="{{ selectedSpouse.url }}"
+      ><h2>{{ selectedSpouse.name | uppercase }}</h2></a
+    >
     <h3>({{ selectedSpouse.playedBy }})</h3>
     <p>{{ selectedSpouse.titles }}</p>
     <h4>Gender:</h4>
@@ -65,11 +75,13 @@
   </div>
 </div>
 <ngb-pagination
+  style="margin-left: 10px;"
   [collectionSize]="2138"
   [pageSize]="20"
   [rotate]="true"
+  [maxSize]="5"
   [boundaryLinks]="true"
-  [(page)]="page"
   aria-label="Default pagination"
-  (pageChange)="loadPage($event)">
+  (pageChange)="loadPage($event)"
+>
 </ngb-pagination>

@@ -1,19 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 import { character } from "./character.model";
 import { DataService } from "../data.service";
-import { House } from '../house/house.model';
+import { House } from "../house/house.model";
 import { HttpClient } from "@angular/common/http";
+import { Book } from "../books/book.model";
 
 @Component({
   selector: "app-character",
   templateUrl: "./character.component.html",
-  styleUrls: ["./character.component.css"]
+  styleUrls: ["../app.component.css"]
 })
 export class CharacterComponent implements OnInit {
   characters: character[];
   itemsPerPage: number;
   totalItems: any;
-  page: 3;
+  page: 1;
   previousPage: any;
   selectedCharacter: character;
 
@@ -23,7 +24,16 @@ export class CharacterComponent implements OnInit {
   selectedAllegiances: House[];
   allegianceSelected: boolean;
 
-  constructor(private DataService: DataService,private http: HttpClient) {}
+  selectedBooks: Book[];
+  //bookSelected: boolean;
+
+  selectedPovBooks: Book[];
+
+  constructor(private DataService: DataService, private http: HttpClient) {
+    this.selectedAllegiances = new Array();
+    this.selectedBooks = new Array();
+    this.selectedPovBooks = new Array();
+  }
 
   ngOnInit() {
     return this.DataService.getCharacters(this.page).subscribe(
@@ -31,46 +41,53 @@ export class CharacterComponent implements OnInit {
     );
   }
 
+  addItem(item, list) {
+    list.push(item);
+  }
+
   onSelect(character: character): void {
     this.selectedCharacter = character;
-
+    this.selectedAllegiances = new Array();
+    this.selectedBooks = new Array();
+    this.selectedPovBooks = new Array();
+    // GET THE SPOUSE
     const spouseUrl = this.selectedCharacter.spouse;
     console.log("Spouse:" + spouseUrl);
+    // if selected character has a spouse -> add
     if (spouseUrl.length !== 0) {
-    this.DataService.getCharacter(spouseUrl).subscribe(
-      (data:character) => (this.selectedSpouse = data));
+      this.DataService.getCharacter(spouseUrl).subscribe(
+        (data: character) => (this.selectedSpouse = data)
+      );
+      // if selected character doesn't have a spouse -> remove name
     } else {
-      this.selectedSpouse = character;
       this.selectedSpouse.name = "";
       console.log(this.selectedSpouse);
-
     }
-    console.log("Allegiances:")
-    console.log(this.selectedCharacter.allegiances);
+    //console.log("Allegiances:");
+    //console.log(this.selectedCharacter.allegiances);
+    // GET THE ALLEGIANCES
     const allegianceArray = this.selectedCharacter.allegiances;
     allegianceArray.forEach(houseUrl => {
-      this.DataService.getHouse(houseUrl).subscribe(
-        (data) => (this.selectedAllegiances.push(data))
-      )
-    }
-    );
-    console.log("SELECTED ALLEGIANCES:")
-    console.log(this.selectedAllegiances)
-
-    /*
-    console.log(this.selectedCharacter);
-    const allegiancesUrl:string[] = this.selectedCharacter.allegiances;
-    //console.log(allegiancesUrl);
-
-    for (let index = 0; index < allegiancesUrl.length; index++) {
-      const element = allegiancesUrl[index];
-      console.log(index +". Element: " + element);
-      this.http.get<House>(element).subscribe(
-        data => (this.selectedAllegiances.push(data))
+      this.DataService.getHouse(houseUrl).subscribe(data =>
+        this.addItem(data, this.selectedAllegiances)
       );
-    }
-    console.log("This is wrong:");
-    console.log(this.selectedAllegiances[0]);*/
+    });
+
+    // GET THE BOOKS
+    const bookArray = this.selectedCharacter.books;
+    bookArray.forEach(bookUrl => {
+      this.DataService.getBook(bookUrl).subscribe(data =>
+        this.addItem(data, this.selectedBooks)
+      );
+    });
+
+    // GET THE POVBOOKS
+    const povBookArray = this.selectedCharacter.povBooks;
+    povBookArray.forEach(povBookUrl => {
+      this.DataService.getBook(povBookUrl).subscribe(data =>
+        this.addItem(data, this.selectedPovBooks)
+      );
+    });
   }
 
   onSpouseSelect(): void {

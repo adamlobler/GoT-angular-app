@@ -8,6 +8,6 @@ export class Book {
   country: string[];
   mediaType: string[];
   released: string;
-  characters: string;
-  povCharacters: string;
+  characters: string[];
+  povCharacters: string[];
 }

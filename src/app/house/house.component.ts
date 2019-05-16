@@ -5,7 +5,7 @@ import { DataService } from "../data.service";
 @Component({
   selector: "app-house",
   templateUrl: "./house.component.html",
-  styleUrls: ["./house.component.css"]
+  styleUrls: ["../app.component.css"]
 })
 export class HouseComponent implements OnInit {
   Houses: House[];

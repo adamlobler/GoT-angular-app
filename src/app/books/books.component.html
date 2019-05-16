@@ -22,18 +22,12 @@
     <h4>Released:</h4>
     <p>{{ selectedBook.released }}</p>
     <h4>Characters:</h4>
-    <p>{{ selectedBook.characters }}</p>
+    <div class="scroll-view">
+      <div *ngFor="let character of selectedCharacters">
+        <p>{{ character.name }}</p>
+      </div>
+    </div>
     <h4>povCharacter:</h4>
     <p>{{ selectedBook.povCharacter }}</p>
   </div>
 </div>
-<ngb-pagination
-  [collectionSize]="12"
-  [pageSize]="12"
-  [rotate]="true"
-  [boundaryLinks]="true"
-  [(page)]="page"
-  aria-label="Default pagination"
-  (pageChange)="loadPage($event)"
->
-</ngb-pagination>
